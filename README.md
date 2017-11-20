@@ -1,6 +1,9 @@
-SRAttractionsMap
+SRAttractionsMap ![Pod status](https://cocoapod-badges.herokuapp.com/v/SRCountdownTimer/badge.png)
 ---
-This is the map which contains attractions added on it.
+This is the map which contains attractions added on it with the abillity to click and see the full description.
+<p align="center">
+  <img src="https://github.com/rsrbk/SRAttractionsMap/blob/master/gif.gif?raw=true" alt="Demo gif"/>
+</p>
 
 Installation
 ---

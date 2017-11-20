@@ -13,6 +13,6 @@ The map contains attractions placed on it with the abillity to click and see the
   s.source           = { :git => 'https://github.com/rsrbk/SRAttractionsMap.git', :tag => s.version.to_s }
  
   s.ios.deployment_target = '11.0'
-  s.source_files = 'SRAttractionsMap/*.swift', 'SRAttractionsMap/**/*.swift'
-  s.resources = 'SRAttractionsMap/*.png', 'SRAttractionsMap/**/*.{xib, png}'
+  s.source_files = 'SRAttractionsMap/**/*.swift'
+  s.resources = 'SRAttractionsMap/**/*.{xib, png}'
 end
