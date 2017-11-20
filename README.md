@@ -1,4 +1,4 @@
-SRAttractionsMap ![Pod status](https://cocoapod-badges.herokuapp.com/v/SRCountdownTimer/badge.png)
+SRAttractionsMap ![Pod status](https://cocoapod-badges.herokuapp.com/v/SRAttractionsMap/badge.png)
 ---
 This is the map which contains attractions added on it with the abillity to click and see the full description.
 <p align="center">
