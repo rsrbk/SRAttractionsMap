@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>Green House Centrum</string>
+		<key>subtitle</key>
+		<string>Relaxing place right in the heart of the town</string>
+		<key>latitude</key>
+		<string>52.371464</string>
+		<key>longitude</key>
+		<string>4.895826</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Kadinsky Coffeeshop</string>
+		<key>subtitle</key>
+		<string>One of the oldest coffeeshops in Amsterdam</string>
+		<key>latitude</key>
+		<string>52.374244</string>
+		<key>longitude</key>
+		<string>4.893463</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Coffeeshop Siberia</string>
+		<key>subtitle</key>
+		<string>Quality and Excellence, since 1984</string>
+		<key>latitude</key>
+		<string>52.378867</string>
+		<key>longitude</key>
+		<string>4.892930</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Boerejongens Coffeeshop West</string>
+		<key>subtitle</key>
+		<string>The Cannabis Sommeliers of Amsterdam</string>
+		<key>latitude</key>
+		<string>52.362315</string>
+		<key>longitude</key>
+		<string>4.857548</string>
+	</dict>
+</array>
+</plist>
