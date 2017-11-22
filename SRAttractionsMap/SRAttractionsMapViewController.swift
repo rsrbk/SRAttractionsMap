@@ -273,7 +273,7 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
     private func setDefaultCalloutViewSize() {
         if UIDevice.current.model.contains("iPad") {
             // iPad
-            calloutViewSize = CGSize(width: 300, height: 275)
+            calloutViewSize = CGSize(width: 350, height: 300)
         } else if UIScreen.main.nativeBounds.height == 2436 {
             // iPhone X
             calloutViewSize = CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-120)
