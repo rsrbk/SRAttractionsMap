@@ -27,14 +27,6 @@ attraction.name = title
 attraction.subname = subtitle
 attraction.image = image
 ```
-If you want to add CTA on your attraction's view, please configure these two parameters:
-```swift
-attraction.detailButtonTitle = "View directions"
-attraction.detailAction = { _ in
-    let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: attraction.coordinate, addressDictionary:nil))
-    mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
-}
-```
 
 After you attractions are ready you should create a custom instance of SRAttractionsMapViewController(subclass of UIViewController):
 ```swift
@@ -71,24 +63,55 @@ let nVC = UINavigationController(rootViewController: mapVC)
 self.present(nVC, animated: true, completion: nil)
 ```
 
+If you want to add CTA on your attraction's view, please specify the title for the button:
+```swift
+mapVC.calloutDetailButtonTitle = "View directions"
+attraction.detailAction = { _ in
+    let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: attraction.coordinate, addressDictionary:nil))
+    mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
+}
+```
+And the action for every attraction it its object(SRAttraction):
+```swift
+attraction.detailAction = { _ in
+    let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: attraction.coordinate, addressDictionary:nil))
+    mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
+}
+```
+
 You can also customize few more properties:
 ```swift
-/// Moves a selected pin to the center if true
-public var shouldScrollToPin: Bool
-
-/// Animation duration. Set to nil if you don't want to have the animation
-public var calloutFadeInAnimationDuration: TimeInterval?
-
-/// The size of the callout view which shows when a pin is selected
-public var calloutViewSize: CGSize
-
 /// The multiplier radius of initial zooming for display modes
 /// firstTwoAttractions/userAndFirstAttraction/userAndTheClosestLocation
-public var zoomRadiusMultiplier: Double
-
+public var zoomRadiusMultiplier: Double = 2
 /// If this theshold in the mode .userAndTheClosestLocation exceeds
 /// - the map will be switched to the .allAttractions mode
-public var closestDistanceThreshold: CLLocationDistance
+public var closestDistanceThreshold: CLLocationDistance = 10000
+
+/// Animation duration. Set to nil if you don't want to have the animation
+public var calloutFadeInAnimationDuration: TimeInterval? = 0.25
+/// The size of the callout view which shows when a pin is selected
+public var calloutViewSize: CGSize!
+
+/// Font for the title of an attraction
+public var calloutTitleFont: UIFont?
+/// Text color for the title of an attraction
+public var calloutTitleColor: UIColor?
+
+/// Font for the title of an attraction
+public var calloutSubtitleFont: UIFont?
+/// Text color for the title of an attraction
+public var calloutSubtitleColor: UIColor?
+
+/// Font for the text on the CTA button on the callout view
+public var calloutDetailButtonFont: UIFont?
+/// Text color for the CTA button on the callout view
+public var calloutDetailButtonTextColor: UIColor?
+
+/// Moves a selected pin to the center if true
+public var shouldScrollToPin = true
+/// Custom marker for attractions on the map
+public var customPinImage: UIImage?
 ```
 
 License

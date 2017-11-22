@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SRAttractionsMap'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'This is the map which contains attractions added on it.'
  
   s.description      = <<-DESC
