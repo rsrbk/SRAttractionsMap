@@ -34,32 +34,42 @@ public enum SRAttractionMapDisplayMode {
 
 public class SRAttractionsMapViewController: UIViewController {
 
-    /// Moves a selected pin to the center if true
-    public var shouldScrollToPin = true
+    /// Attractions to show
+    public var attractions: [SRAttraction] = []
 
-    /// Animation duration. Set to nil if you don't want to have the animation
-    public var calloutFadeInAnimationDuration: TimeInterval? = 0.25
-
-    /// The size of the callout view which shows when a pin is selected
-    public var calloutViewSize: CGSize!
-
+    /// Decides how the map gonna be zoomed in initially after appearing of the view controller
+    public var displayMode: SRAttractionMapDisplayMode = .allAttractions
     /// The multiplier radius of initial zooming for display modes
     /// firstTwoAttractions/userAndFirstAttraction/userAndTheClosestLocation
     public var zoomRadiusMultiplier: Double = 2
-
     /// If this theshold in the mode .userAndTheClosestLocation exceeds
     /// - the map will be switched to the .allAttractions mode
     public var closestDistanceThreshold: CLLocationDistance = 10000
 
-    // Make sure that properties below are set before the viewDidLoad method is called
-    // It's much better and safe to configure this class from the code rather than from the storyboard/xib
+    /// Animation duration. Set to nil if you don't want to have the animation
+    public var calloutFadeInAnimationDuration: TimeInterval? = 0.25
+    /// The size of the callout view which shows when a pin is selected
+    public var calloutViewSize: CGSize!
 
-    /// Attractions to show
-    public var attractions: [SRAttraction] = []
+    /// Font for the title of an attraction
+    public var calloutTitleFont: UIFont?
+    /// Text color for the title of an attraction
+    public var calloutTitleColor: UIColor?
 
-    /// Display mode decides how the map gonna be zoomed in initially after appearing of the view controller
-    public var displayMode: SRAttractionMapDisplayMode = .firstTwoAttractions
+    /// Font for the title of an attraction
+    public var calloutSubtitleFont: UIFont?
+    /// Text color for the title of an attraction
+    public var calloutSubtitleColor: UIColor?
 
+    /// Font for the text on the CTA button on the callout view
+    public var calloutDetailButtonFont: UIFont?
+    /// Text color for the CTA button on the callout view
+    public var calloutDetailButtonTextColor: UIColor?
+    /// Text to show on the CTA button on the callout view
+    public var calloutDetailButtonTitle: String?
+
+    /// Moves a selected pin to the center if true
+    public var shouldScrollToPin = true
     /// Custom marker for attractions on the map
     public var customPinImage: UIImage?
 
@@ -277,15 +287,35 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
 
     private func generateCalloutView(attraction: SRAttraction) -> SRCalloutView {
         let calloutView = SRCalloutView(frame: .zero)
-        calloutView.titleLabel.text = attraction.name
-        calloutView.subtitleLabel.text = attraction.subname
         calloutView.imageView.image = attraction.image
-        calloutView.detailButton.setTitle(attraction.detailButtonTitle, for: .normal)
 
-        if let detailButtonTitle = attraction.detailButtonTitle {
-            calloutView.detailButton.setTitle(detailButtonTitle, for: .normal)
+        calloutView.titleLabel.text = attraction.name
+        if let titleFont = calloutTitleFont {
+            calloutView.titleLabel.font = titleFont
+        }
+        if let titleColor = calloutTitleColor {
+            calloutView.titleLabel.textColor = titleColor
+        }
+
+        calloutView.subtitleLabel.text = attraction.subname
+        if let subtitleFont = calloutSubtitleFont {
+            calloutView.subtitleLabel.font = subtitleFont
+        }
+        if let subtitleColor = calloutSubtitleColor {
+            calloutView.subtitleLabel.textColor = subtitleColor
+        }
+
+        if let buttonTitle = calloutDetailButtonTitle {
+            calloutView.detailButton.setTitle(buttonTitle, for: .normal)
             calloutView.onDetailTap = { [weak self] in
                 attraction.detailAction?(self)
+            }
+
+            if let buttonFont = calloutDetailButtonFont {
+                calloutView.detailButton.titleLabel?.font = buttonFont
+            }
+            if let buttonTextColor = calloutDetailButtonTextColor {
+                calloutView.detailButton.setTitleColor(buttonTextColor, for: .normal)
             }
         } else {
             calloutView.hideDetailButton()

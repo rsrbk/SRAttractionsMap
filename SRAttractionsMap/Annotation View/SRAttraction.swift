@@ -34,7 +34,6 @@ public class SRAttraction: NSObject, MKAnnotation {
 
     /// Called when user has clicked on the "View more" button
     public var detailAction: ((_ currentViewController: UIViewController?) -> Void)?
-    public var detailButtonTitle: String?
 
     internal var latitude: Double
     internal var longitude: Double

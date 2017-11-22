@@ -43,7 +43,6 @@ class ViewController: UIViewController {
                     attraction.name = title
                     attraction.subname = subtitle
                     attraction.image = image
-                    attraction.detailButtonTitle = "View directions"
                     attraction.detailAction = { _ in
                         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: attraction.coordinate, addressDictionary:nil))
                         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
@@ -55,6 +54,7 @@ class ViewController: UIViewController {
 
                 let mapVC = SRAttractionsMapViewController(attractions: attractions, displayMode: .allAttractions)
                 mapVC.title = "Amsterdam Coffeshops"
+                mapVC.calloutDetailButtonTitle = "View directions"
 
                 let nVC = UINavigationController(rootViewController: mapVC)
                 nVC.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17.0, weight: .light),
