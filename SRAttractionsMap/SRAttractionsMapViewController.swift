@@ -41,17 +41,7 @@ public class SRAttractionsMapViewController: UIViewController {
     public var calloutFadeInAnimationDuration: TimeInterval? = 0.25
 
     /// The size of the callout view which shows when a pin is selected
-    public var calloutViewSize: CGSize {
-        if UIScreen.main.nativeBounds.height == 2436 {
-            // iPhone X
-            return CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-120)
-        } else if UIScreen.main.nativeBounds.height == 2208 {
-            // iPhone 6+/6S+/7+/8+
-            return CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-80)
-        } else {
-            return CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-40)
-        }
-    }
+    public var calloutViewSize: CGSize!
 
     /// The multiplier radius of initial zooming for display modes
     /// firstTwoAttractions/userAndFirstAttraction/userAndTheClosestLocation
@@ -227,6 +217,9 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
                 mapView.deselectAnnotation(attraction, animated: false)
             }
 
+            if (calloutViewSize == nil) {
+                setDefaultCalloutViewSize()
+            }
             let newCalloutView = generateCalloutView(attraction: attraction)
             let verticalOffset: CGFloat = 4
             newCalloutView.frame = CGRect(x: view.frame.width/2 - calloutViewSize.width/2,
@@ -264,6 +257,21 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
             } else {
                 calloutView.removeFromSuperview()
             }
+        }
+    }
+
+    private func setDefaultCalloutViewSize() {
+        if UIDevice.current.model.contains("iPad") {
+            // iPad
+            calloutViewSize = CGSize(width: 300, height: 275)
+        } else if UIScreen.main.nativeBounds.height == 2436 {
+            // iPhone X
+            calloutViewSize = CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-120)
+        } else if UIScreen.main.nativeBounds.height == 2208 {
+            // iPhone 6+/6S+/7+/8+
+            calloutViewSize = CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-80)
+        } else {
+            calloutViewSize = CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-40)
         }
     }
 
