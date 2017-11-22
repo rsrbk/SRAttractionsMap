@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SRAttractionsMap'
-  s.version          = '1.0.1'
+  s.version          = '1.0.3'
   s.summary          = 'This is the map which contains attractions added on it.'
  
   s.description      = <<-DESC
@@ -14,5 +14,5 @@ The map contains attractions placed on it with the abillity to click and see the
  
   s.ios.deployment_target = '11.0'
   s.source_files = 'SRAttractionsMap/**/*.swift'
-  s.resources = 'SRAttractionsMap/**/*.{xib, png}'
+  s.resources = 'SRAttractionsMap/Callout\ View/close_icon.png', 'SRAttractionsMap/Callout\ View/SRCalloutView.xib'
 end

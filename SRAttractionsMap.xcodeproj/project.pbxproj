@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		441B20A11FC5A1B4007A728E /* close_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 441B20A01FC5A1B4007A728E /* close_icon.png */; };
 		448B71B31FC0DDF6005C69C2 /* SRAttractionsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448B71961FC0DDF6005C69C2 /* SRAttractionsMapViewController.swift */; };
 		448B71DB1FC0DECA005C69C2 /* SRCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448B71D81FC0DECA005C69C2 /* SRCalloutView.swift */; };
 		448B71DC1FC0DECA005C69C2 /* SRCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 448B71D91FC0DECA005C69C2 /* SRCalloutView.xib */; };
@@ -14,10 +15,10 @@
 		448B71E21FC0DEF9005C69C2 /* annotation_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 448B71DF1FC0DEF9005C69C2 /* annotation_icon.png */; };
 		448B71E31FC0DEF9005C69C2 /* SRAttraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448B71E01FC0DEF9005C69C2 /* SRAttraction.swift */; };
 		448B71E41FC0DEF9005C69C2 /* SRAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448B71E11FC0DEF9005C69C2 /* SRAnnotationView.swift */; };
-		44E2E4451FC1B51600F34789 /* close_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E2E4441FC1B51600F34789 /* close_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		441B20A01FC5A1B4007A728E /* close_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_icon.png; path = "Callout View/close_icon.png"; sourceTree = "<group>"; };
 		448B716D1FC0DD9F005C69C2 /* SRAttractionsMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SRAttractionsMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		448B71711FC0DD9F005C69C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		448B71961FC0DDF6005C69C2 /* SRAttractionsMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRAttractionsMapViewController.swift; sourceTree = "<group>"; };
@@ -27,7 +28,6 @@
 		448B71DF1FC0DEF9005C69C2 /* annotation_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = annotation_icon.png; path = "Annotation View/annotation_icon.png"; sourceTree = "<group>"; };
 		448B71E01FC0DEF9005C69C2 /* SRAttraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRAttraction.swift; path = "Annotation View/SRAttraction.swift"; sourceTree = "<group>"; };
 		448B71E11FC0DEF9005C69C2 /* SRAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SRAnnotationView.swift; path = "Annotation View/SRAnnotationView.swift"; sourceTree = "<group>"; };
-		44E2E4441FC1B51600F34789 /* close_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 		448B71DE1FC0DECE005C69C2 /* Callout View */ = {
 			isa = PBXGroup;
 			children = (
-				44E2E4441FC1B51600F34789 /* close_icon.png */,
+				441B20A01FC5A1B4007A728E /* close_icon.png */,
 				448B71D81FC0DECA005C69C2 /* SRCalloutView.swift */,
 				448B71D91FC0DECA005C69C2 /* SRCalloutView.xib */,
 				448B71DA1FC0DECA005C69C2 /* SRTriangleView.swift */,
@@ -160,7 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				448B71DC1FC0DECA005C69C2 /* SRCalloutView.xib in Resources */,
-				44E2E4451FC1B51600F34789 /* close_icon.png in Resources */,
+				441B20A11FC5A1B4007A728E /* close_icon.png in Resources */,
 				448B71E21FC0DEF9005C69C2 /* annotation_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
