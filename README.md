@@ -66,10 +66,6 @@ self.present(nVC, animated: true, completion: nil)
 If you want to add CTA on your attraction's view, please specify the title for the button:
 ```swift
 mapVC.calloutDetailButtonTitle = "View directions"
-attraction.detailAction = { _ in
-    let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: attraction.coordinate, addressDictionary:nil))
-    mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeWalking])
-}
 ```
 And the action for every attraction it its object(SRAttraction):
 ```swift
