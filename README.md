@@ -1,6 +1,6 @@
 SRAttractionsMap ![Pod status](https://cocoapod-badges.herokuapp.com/v/SRAttractionsMap/badge.png)
 ---
-This is the map which contains attractions added on it with the abillity to click and see the full description.
+This is the map with attractions on which you can click and see the full description.
 <p align="center">
   <img src="https://github.com/rsrbk/SRAttractionsMap/blob/master/gif.gif?raw=true" alt="Demo gif"/>
 </p>
@@ -17,7 +17,9 @@ Alternatively, you can manually add the files in the `SRAttractionsMap` director
 
 Usage
 --
-First of all, you need to have an array of attractions(SRAttraction objects) to show:
+First of all, you should add NSLocationWhenInUseUsageDescription to you info.plist with a brief explanation.
+
+Then you need to have an array of attractions(SRAttraction objects) to show:
 ```swift
 let attraction = SRAttraction(latitude: 52.362315, longitude: 4.857548)
 ```
@@ -109,6 +111,11 @@ public var shouldScrollToPin = true
 /// Custom marker for attractions on the map
 public var customPinImage: UIImage?
 ```
+
+Check out my other libraries
+--
+
+[SRCountdownTimer](https://github.com/rsrbk/SRCountdownTimer) - a simple circle countdown with a configurable timer.
 
 License
 --
