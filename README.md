@@ -115,6 +115,7 @@ public var customPinImage: UIImage?
 Check out my other libraries
 --
 
+[SmileToUnlock](https://github.com/rsrbk/SmileToUnlock) - uses ARKit Face Tracking in order to catch a user's smile.<br>
 [SRCountdownTimer](https://github.com/rsrbk/SRCountdownTimer) - a simple circle countdown with a configurable timer.
 
 License
