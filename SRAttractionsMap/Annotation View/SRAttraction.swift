@@ -31,6 +31,9 @@ public class SRAttraction: NSObject, MKAnnotation {
     public var name: String?
     public var subname: String?
     public var image: UIImage?
+    
+    // This property provides you with the abillity to use 3d part framework(for ex. Kingfisher)
+    public var imageDisplayingAction: ((UIImageView) -> Void)?
 
     /// Called when user has clicked on the "View more" button
     public var detailAction: ((_ currentViewController: UIViewController?) -> Void)?

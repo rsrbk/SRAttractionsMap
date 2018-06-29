@@ -32,10 +32,7 @@ public enum SRAttractionMapDisplayMode {
     case userAndTheClosestLocation
 }
 
-public class SRAttractionsMapViewController: UIViewController {
-
-    /// Attractions to show
-    public var attractions: [SRAttraction] = []
+open class SRAttractionsMapViewController: UIViewController {
 
     /// Decides how the map gonna be zoomed in initially after appearing of the view controller
     public var displayMode: SRAttractionMapDisplayMode = .allAttractions
@@ -72,6 +69,9 @@ public class SRAttractionsMapViewController: UIViewController {
     public var shouldScrollToPin = true
     /// Custom marker for attractions on the map
     public var customPinImage: UIImage?
+    
+    /// Attractions to show
+    private var attractions: [SRAttraction] = []
 
     public init(attractions: [SRAttraction], displayMode: SRAttractionMapDisplayMode) {
         super.init(nibName: nil, bundle: nil)
@@ -99,7 +99,7 @@ public class SRAttractionsMapViewController: UIViewController {
         super.init(coder: aDecoder)
     }
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         view.addSubview(mapView)
@@ -287,7 +287,11 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
 
     private func generateCalloutView(attraction: SRAttraction) -> SRCalloutView {
         let calloutView = SRCalloutView(frame: .zero)
-        calloutView.imageView.image = attraction.image
+        if attraction.image != nil {
+            calloutView.imageView.image = attraction.image
+        } else {
+            attraction.imageDisplayingAction?(calloutView.imageView)
+        }
 
         calloutView.titleLabel.text = attraction.name
         if let titleFont = calloutTitleFont {
