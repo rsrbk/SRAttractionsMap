@@ -33,7 +33,16 @@ public enum SRAttractionMapDisplayMode {
 }
 
 open class SRAttractionsMapViewController: UIViewController {
-
+    
+    /// Attractions to show
+    public var attractions: [SRAttraction] = [] {
+        didSet {
+            mapView.removeAnnotations(oldValue)
+            mapView.addAnnotations(attractions)
+            zoomInAttractions()
+        }
+    }
+    
     /// Decides how the map gonna be zoomed in initially after appearing of the view controller
     public var displayMode: SRAttractionMapDisplayMode = .allAttractions
     /// The multiplier radius of initial zooming for display modes
@@ -42,72 +51,65 @@ open class SRAttractionsMapViewController: UIViewController {
     /// If this theshold in the mode .userAndTheClosestLocation exceeds
     /// - the map will be switched to the .allAttractions mode
     public var closestDistanceThreshold: CLLocationDistance = 10000
-
+    
     /// Animation duration. Set to nil if you don't want to have the animation
     public var calloutFadeInAnimationDuration: TimeInterval? = 0.25
     /// The size of the callout view which shows when a pin is selected
     public var calloutViewSize: CGSize!
-
+    
     /// Font for the title of an attraction
     public var calloutTitleFont: UIFont?
     /// Text color for the title of an attraction
     public var calloutTitleColor: UIColor?
-
+    
     /// Font for the title of an attraction
     public var calloutSubtitleFont: UIFont?
     /// Text color for the title of an attraction
     public var calloutSubtitleColor: UIColor?
-
+    
     /// Font for the text on the CTA button on the callout view
     public var calloutDetailButtonFont: UIFont?
     /// Text color for the CTA button on the callout view
     public var calloutDetailButtonTextColor: UIColor?
     /// Text to show on the CTA button on the callout view
     public var calloutDetailButtonTitle: String?
-
+    
     /// Moves a selected pin to the center if true
     public var shouldScrollToPin = true
     /// Custom marker for attractions on the map
     public var customPinImage: UIImage?
     
-    /// Attractions to show
-    private var attractions: [SRAttraction] = []
-
     public init(attractions: [SRAttraction], displayMode: SRAttractionMapDisplayMode) {
         super.init(nibName: nil, bundle: nil)
-
+        
         self.attractions = attractions
         self.displayMode = displayMode
     }
-
+    
     convenience public init(customPinImage: UIImage, attractions: [SRAttraction],  displayMode: SRAttractionMapDisplayMode) {
         self.init(attractions: attractions, displayMode: displayMode)
-
+        
         self.customPinImage = customPinImage
     }
-
-    public func addAttractions(attractions: [SRAttraction]) {
-        mapView.addAnnotations(attractions)
-    }
-
-    public func removeAttractions(attractions: [SRAttraction]) {
-        mapView.removeAnnotations(attractions)
-    }
-
+    
     // Internal stuff
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.addSubview(mapView)
         mapView.frame = view.bounds
         mapView.showsUserLocation = true
         mapView.delegate = self
         mapView.addAnnotations(attractions)
-
+        
+        zoomInAttractions()
+    }
+    
+    public func zoomInAttractions() {
         switch displayMode {
         case .userAndFirstAttraction, .userAndTheClosestLocation:
             locationManager.delegate = self
@@ -117,7 +119,7 @@ open class SRAttractionsMapViewController: UIViewController {
             if attractions.count < 2 {
                 fatalError("We need to have at least 2 attractions for this mode")
             }
-
+            
             let first = attractions[0]
             let second = attractions[1]
             let radius: CLLocationDistance = first.location.distance(from: second.location) * zoomRadiusMultiplier
@@ -127,7 +129,7 @@ open class SRAttractionsMapViewController: UIViewController {
             mapView.showAnnotations(attractions, animated: true)
         }
     }
-
+    
     internal var locationManager = CLLocationManager()
     internal var mapView = MKMapView()
     internal var calloutView: SRCalloutView?
@@ -149,12 +151,12 @@ extension SRAttractionsMapViewController: CLLocationManagerDelegate {
             break
         }
     }
-
+    
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if zoomedInInitially || attractions.isEmpty {
             return
         }
-
+        
         if let location = locations.last {
             switch displayMode {
             case .userAndFirstAttraction:
@@ -171,7 +173,7 @@ extension SRAttractionsMapViewController: CLLocationManagerDelegate {
                         closestDistance = currentDistance
                     }
                 }
-
+                
                 if closestDistance < closestDistanceThreshold {
                     let radius = closestDistance * zoomRadiusMultiplier
                     let region = MKCoordinateRegionMakeWithDistance(location.coordinate, radius, radius)
@@ -183,15 +185,15 @@ extension SRAttractionsMapViewController: CLLocationManagerDelegate {
             case .firstTwoAttractions, .allAttractions:
                 break
             }
-
+            
             zoomedInInitially = true
         }
     }
-
+    
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-
+        
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -201,32 +203,32 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
         if annotation is MKUserLocation {
             return nil
         }
-
+        
         let reuseIdentifier = "annotation"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
         if annotationView == nil {
             var pinImage = customPinImage
-
+            
             if pinImage == nil {
                 let frameworkBundle = Bundle.init(for: type(of: self))
                 pinImage = UIImage(named: "annotation_icon", in: frameworkBundle, compatibleWith: nil)
             }
-
+            
             annotationView = SRAnnotationView(annotationImage: pinImage!,
                                               annotation: annotation,
                                               reuseIdentifier: reuseIdentifier)
             annotationView?.centerOffset = CGPoint(x: 0, y: -pinImage!.size.height / 2)
         }
-
+        
         return annotationView
     }
-
+    
     public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let attraction = view.annotation as? SRAttraction {
             if calloutView != nil {
                 mapView.deselectAnnotation(attraction, animated: false)
             }
-
+            
             if (calloutViewSize == nil) {
                 setDefaultCalloutViewSize()
             }
@@ -237,11 +239,11 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
                                           width: calloutViewSize.width,
                                           height: calloutViewSize.height)
             view.addSubview(newCalloutView)
-
+            
             if shouldScrollToPin {
                 mapView.setCenter(attraction.coordinate, animated: true)
             }
-
+            
             // Fade in animation
             if let duration = calloutFadeInAnimationDuration {
                 newCalloutView.alpha = 0
@@ -249,15 +251,15 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
                     newCalloutView.alpha = 1
                 })
             }
-
+            
             calloutView = newCalloutView
         }
     }
-
+    
     public func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         if let calloutView = calloutView {
             self.calloutView = nil
-
+            
             if let duration = calloutFadeInAnimationDuration {
                 UIView.animate(withDuration: duration, animations: {
                     calloutView.alpha = 0
@@ -269,7 +271,7 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
             }
         }
     }
-
+    
     private func setDefaultCalloutViewSize() {
         if UIDevice.current.model.contains("iPad") {
             // iPad
@@ -284,7 +286,7 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
             calloutViewSize = CGSize(width: UIScreen.main.bounds.width-20, height: UIScreen.main.bounds.height/2-40)
         }
     }
-
+    
     private func generateCalloutView(attraction: SRAttraction) -> SRCalloutView {
         let calloutView = SRCalloutView(frame: .zero)
         if attraction.image != nil {
@@ -292,7 +294,7 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
         } else {
             attraction.imageDisplayingAction?(calloutView.imageView)
         }
-
+        
         calloutView.titleLabel.text = attraction.name
         if let titleFont = calloutTitleFont {
             calloutView.titleLabel.font = titleFont
@@ -300,7 +302,7 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
         if let titleColor = calloutTitleColor {
             calloutView.titleLabel.textColor = titleColor
         }
-
+        
         calloutView.subtitleLabel.text = attraction.subname
         if let subtitleFont = calloutSubtitleFont {
             calloutView.subtitleLabel.font = subtitleFont
@@ -308,13 +310,13 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
         if let subtitleColor = calloutSubtitleColor {
             calloutView.subtitleLabel.textColor = subtitleColor
         }
-
+        
         if let buttonTitle = calloutDetailButtonTitle {
             calloutView.detailButton.setTitle(buttonTitle, for: .normal)
             calloutView.onDetailTap = { [weak self] in
                 attraction.detailAction?(self)
             }
-
+            
             if let buttonFont = calloutDetailButtonFont {
                 calloutView.detailButton.titleLabel?.font = buttonFont
             }
@@ -324,14 +326,14 @@ extension SRAttractionsMapViewController: MKMapViewDelegate {
         } else {
             calloutView.hideDetailButton()
         }
-
+        
         calloutView.onDetailTap = { [weak self] in
             attraction.detailAction?(self)
         }
         calloutView.onCloseTap = { [weak self] in
             self?.mapView.deselectAnnotation(attraction, animated: true)
         }
-
+        
         return calloutView
     }
 }
